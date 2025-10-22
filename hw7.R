@@ -7,7 +7,7 @@ source("helpers.R")
 # Define UI for application that draws a histogram
 ui <- fluidPage(
 
-  "Add a title panel here!",
+  h1("Correlation Exploration"),
   sidebarLayout(
     sidebarPanel(
       h2("Select Variables to Find Correlation:"),
@@ -24,7 +24,8 @@ ui <- fluidPage(
           "Property value",
           "Usual hours worked per week"
         ),
-        selected = "Total person's income"
+        selected = "Total person's income",
+        selectize = FALSE
       ),
       selectInput(
         "corr_y",
@@ -39,14 +40,17 @@ ui <- fluidPage(
           "Property value",
           "Usual hours worked per week"
         ),
-        selected = "Travel time to work"
+        selected = "Travel time to work",
+        selectize = FALSE
       ),
-      radioButtons("hhl_corr", 
-                   label = "Household Language",
-                   choices = list("All" = "All", 
-                                  "Engilsh only" = "English only", 
-                                  "Spanish" = "Spanish", 
-                                  "Other" = "Other")
+
+      br(),
+    radioButtons("hhl_corr", 
+                 label = "Household Language",
+                 choices = list("All" = "All", 
+                                "Engilsh only" = "English only", 
+                                "Spanish" = "Spanish", 
+                                "Other" = "Other")
     ),
     radioButtons("hl_corr", 
                  label = "SNAP Recipient",
@@ -61,19 +65,14 @@ ui <- fluidPage(
                                 "High School or GED" = "High School or GED", 
                                 "College Degree" = "College Degree")
     ),
-    
-      
-      
-    
-      "Put your selectize inputs here!",
-      "Give them internal IDs of corr_x and corr_y.",
-      "Note the vector with these names comes from the helpers.R files. The object is called `numeric_vars`. Make sure you don't assign the same initial value to both inputs!",
-      br(),
-      "Place your radio buttons here! One radio button for each variable we may subset on. Set the internal IDs for these to be hhl_corr, fs_corr, and schl_corr.",
-      
-      "Notice that you can use choiceNames and choiceValues to have different values show vs the values you use internally for comparisons. There are 'internal' values already used in the server file - the first large commented section - so you should set the internal values to match those!",
       h2("Select a Sample Size"),
-      "Put your slider for sample size here. Give this an ID of corr_n.",
+    sliderInput(
+      "corr_n",
+      label = "",
+      min = 20, 
+      max = 500, 
+      value = 20
+    ),
       actionButton("corr_sample","Get a Sample!")
     ),
     mainPanel(
