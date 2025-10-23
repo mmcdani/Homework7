@@ -4,6 +4,9 @@ library(tidyverse)
 
 source("helpers.R")
 
+#Load data set
+my_sample <- readRDS("my_sample_temp.rds")
+
 # Define UI for application that draws a histogram
 ui <- fluidPage(
 
@@ -25,8 +28,10 @@ ui <- fluidPage(
           "Usual hours worked per week"
         ),
         selected = "Total person's income",
-        selectize = FALSE
       ),
+      
+      br(),
+      
       selectInput(
         "corr_y",
         label = "Y Variable",
@@ -40,11 +45,11 @@ ui <- fluidPage(
           "Property value",
           "Usual hours worked per week"
         ),
-        selected = "Travel time to work",
-        selectize = FALSE
+        selected = "Travel time to work"
       ),
 
       br(),
+
     radioButtons("hhl_corr", 
                  label = "Household Language",
                  choices = list("All" = "All", 
@@ -216,7 +221,7 @@ server <- function(input, output, session) {
     #     geom_point()
 
 
-    #This code does the correlation guessing game! Nothign to change here
+    #This code does the correlation guessing game! Nothing to change here
     observeEvent(input$corr_submit, {
       close <- abs(input$corr_guess - sample_corr$corr_truth) <= .05
       if(close){
