@@ -4,11 +4,10 @@ library(tidyverse)
 
 source("helpers.R")
 
-#Load data set
-my_sample <- readRDS("my_sample_temp.rds")
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
+  useShinyalert(), #enables popups
   #title 
   titlePanel("Correlation Exploration"),
   sidebarLayout(
@@ -30,23 +29,26 @@ ui <- fluidPage(
       
       radioButtons("hhl_corr", 
                    label = "Household Language",
-                   choices = list("All" = "All", 
-                                  "Engilsh only" = "English only", 
-                                  "Spanish" = "Spanish", 
-                                  "Other" = "Other")
+                   choices = list("All" = "all", 
+                                  "English only" = "english", 
+                                  "Spanish" = "spanish", 
+                                  "Other" = "other"),
+                   selected = "all"
       ),
-      radioButtons("hl_corr", 
+      radioButtons("fs_corr", 
                    label = "SNAP Recipient",
-                   choices = list("All" = "All", 
-                                  "Yes" = "Yes", 
-                                  "No" = "No")
+                   choices = list("All" = "all", 
+                                  "Yes" = "yes", 
+                                  "No" = "no"),
+                   selected = "all"
       ),
       radioButtons("schl_corr", 
                    label = "Educational attainment",
-                   choices = list("All" = "All", 
-                                  "High School not Completed" = "High School not Completed", 
-                                  "High School or GED" = "High School or GED", 
-                                  "College Degree" = "College Degree")
+                   choices = list("All" = "all", 
+                                  "High School not Completed" = "no_hs", 
+                                  "High School or GED" = "hs", 
+                                  "College Degree" = "college"),
+                   selected = "all"
       ),
       
       br(),
@@ -54,7 +56,7 @@ ui <- fluidPage(
       #slider function for sample size
       h2("Select a Sample Size"),
       sliderInput(
-        "corr_n",
+        "corr_n", 
         label = "",
         min = 20, 
         max = 500, 
